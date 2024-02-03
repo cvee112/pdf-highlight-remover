@@ -55,7 +55,7 @@ for page_number in range(n_pages):
     ])
     image_array[criteria] = 255
     imageio.imsave(os.path.join(cwd_img_dir, f"{page_number:0>3d}" +'.png'), image_array)
-    print(f"Progress: {page_number}/{n_pages} ({round(page_number/n_pages * 100)}%)")
+    print(f"Progress: {page_number+1}/{n_pages} ({round((page_number+1)/n_pages * 100)}%)")
 
 highlight_removal_end = datetime.now()
 print(f"\nConversion to images + highlight removal + image saving took {highlight_removal_end - start_time}\n")
