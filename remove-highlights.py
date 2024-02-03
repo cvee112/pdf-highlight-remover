@@ -1,12 +1,20 @@
 from datetime import datetime
 import glob
 import img2pdf
+import os
 from pdf2image import convert_from_path
 from PIL import Image
 from sys import argv
 
 input_pdf_path = argv[1]
 output_pdf_path = argv[2]
+cwd = os.getcwd()
+cwd_img = os.path.join(cwd, 'pdf_images')
+cwd_img_dir = os.path.join(cwd_img, os.path.basename(output_pdf_path).split(".")[0])
+
+if not os.path.exists(cwd_img_dir):
+    os.mkdir(cwd_img)
+    os.mkdir(cwd_img_dir)
 
 start_time = datetime.now()
 
@@ -56,7 +64,7 @@ print(f"\nHighlight removal took {highlight_removal_end - pdf2img_end}\n")
 print(f"Saving images...\n")
 
 for i in range(len(images)):
-    images[i].save('page'+ str(i) +'.png', 'PNG')
+    images[i].save(os.path.join(cwd_img_dir, 'page'+ str(i) +'.png'), 'PNG')
 
 save_img_end = datetime.now()
 print(f"Saving images took {save_img_end - highlight_removal_end}\n")
