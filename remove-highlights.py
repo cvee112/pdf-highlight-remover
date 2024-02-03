@@ -1,6 +1,8 @@
 from datetime import datetime
 import glob
+import imageio
 import img2pdf
+import numpy as np
 import os
 from pdf2image import convert_from_path
 from sys import argv
@@ -47,13 +49,15 @@ total = len(images)
 i = 0
 
 for image in images:
-    image_data = image.load()
-    height, width = image.size
-    for loop1 in range(height):
-        for loop2 in range(width):
-            r,g,b = image_data[loop1, loop2]
-            if r_range[0] <= r <= r_range[1] and g_range[0] <= g <= g_range[1] and b_range[0] <= b <= b_range[1]:
-                image_data[loop1,loop2] = 255,255,255
+    image_array = np.array(image)
+    print(image_array.shape)
+    criteria = np.logical_and.reduce([
+        (image_array[:, :, 0] >= r_range[0]) & (image_array[:, :, 0] <= r_range[1]),
+        (image_array[:, :, 1] >= g_range[0]) & (image_array[:, :, 0] <= g_range[1]),
+        (image_array[:, :, 2] >= b_range[0]) & (image_array[:, :, 0] <= b_range[1]),
+    ])
+    image_array[criteria] = 255
+    imageio.imsave(os.path.join(cwd_img_dir, 'page'+ str(i) +'.png'), image_array)
     i += 1
     print(f"Highlight removal progress: {i}/{total} ({round(i/total * 100)}%)")
 
@@ -61,9 +65,6 @@ highlight_removal_end = datetime.now()
 print(f"\nHighlight removal took {highlight_removal_end - pdf2img_end}\n")
 
 print(f"Saving images...\n")
-
-for i in range(len(images)):
-    images[i].save(os.path.join(cwd_img_dir, 'page'+ str(i) +'.png'), 'PNG')
 
 save_img_end = datetime.now()
 print(f"Saving images took {save_img_end - highlight_removal_end}\n")
