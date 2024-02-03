@@ -13,8 +13,9 @@ cwd = os.getcwd()
 cwd_img = os.path.join(cwd, 'pdf_images')
 cwd_img_dir = os.path.join(cwd_img, os.path.basename(output_pdf_path).split(".")[0])
 
-if not os.path.exists(cwd_img_dir):
+if not os.path.exists(cwd_img):
     os.mkdir(cwd_img)
+if not os.path.exists(cwd_img_dir):
     os.mkdir(cwd_img_dir)
 
 start_time = datetime.now()
@@ -53,8 +54,8 @@ for image in images:
     print(image_array.shape)
     criteria = np.logical_and.reduce([
         (image_array[:, :, 0] >= r_range[0]) & (image_array[:, :, 0] <= r_range[1]),
-        (image_array[:, :, 1] >= g_range[0]) & (image_array[:, :, 0] <= g_range[1]),
-        (image_array[:, :, 2] >= b_range[0]) & (image_array[:, :, 0] <= b_range[1]),
+        (image_array[:, :, 1] >= g_range[0]) & (image_array[:, :, 1] <= g_range[1]),
+        (image_array[:, :, 2] >= b_range[0]) & (image_array[:, :, 2] <= b_range[1]),
     ])
     image_array[criteria] = 255
     imageio.imsave(os.path.join(cwd_img_dir, 'page'+ str(i) +'.png'), image_array)
