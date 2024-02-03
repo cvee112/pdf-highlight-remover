@@ -3,7 +3,6 @@ import glob
 import img2pdf
 import os
 from pdf2image import convert_from_path
-from PIL import Image
 from sys import argv
 
 input_pdf_path = argv[1]
