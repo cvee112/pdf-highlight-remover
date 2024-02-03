@@ -1,8 +1,10 @@
 Deprecated==1.2.14
+imageio==2.33.1
 img2pdf==0.5.1
 lxml==5.1.0
+numpy==1.26.3
 packaging==23.2
-pdf2image==1.17.0
 pikepdf==8.12.0
 pillow==10.2.0
+pypdfium2==4.26.0
 wrapt==1.16.0
