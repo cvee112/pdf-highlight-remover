@@ -3,7 +3,6 @@ import glob
 import img2pdf
 import os
 from pdf2image import convert_from_path
-from PIL import Image
 from sys import argv
 
 input_pdf_path = argv[1]
@@ -71,11 +70,8 @@ print(f"Saving images took {save_img_end - highlight_removal_end}\n")
 
 print("Converting images back to PDF...\n")
 
-file_list = glob.glob('*.png')
+file_list = glob.glob(os.path.join(cwd_img_dir, '*.png'))
 file_list.sort()
-
-total_files = len(file_list)
-j = 0
 
 with open(output_pdf_path, "wb") as f:
     f.write(img2pdf.convert(file_list))
