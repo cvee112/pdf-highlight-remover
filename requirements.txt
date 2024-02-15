@@ -1,10 +1,4 @@
-Deprecated
 imageio
 img2pdf
-lxml
 numpy
-packaging
-pikepdf
-pillow
 pypdfium2
-wrapt
